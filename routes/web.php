@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Message;
+use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +17,22 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::get('/', 'MessageController@showList');
 
-Route::get('/', function () {
-    return view('welcome');
+Route::post('/add', function(Request $request){
+    $message = new Message();
+    Validator::make($request->all(), [
+        'text' => 'required|unique:messages'
+    ], $message->messages())->validate();
+    $message->user_id = Auth::user()->id;
+    $message->text = htmlentities($request->text);
+    $message->save();
+    return redirect('/');
+});
+
+Route::delete('/message/{message}', function (Message $message) {
+    if($message->user_id == Auth::user()->id) $message->delete();
+    return redirect('/');
 });
 
 Auth::routes();

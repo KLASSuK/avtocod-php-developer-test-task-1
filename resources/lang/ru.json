@@ -1,5 +1,18 @@
 {
+  "Home": "Главная",
   "Login": "Авторизация",
   "Register": "Регистрация",
-  "Name": "Имя пользователя"
+  "Name": "Имя пользователя",
+  "Password": "Пароль",
+  "E-Mail Address": "E-Mail",
+  "Confirm Password": "Подтвердите пароль",
+  "Remember Me": "Запомнить меня",
+  "Forgot Your Password?": "Забыли пароль?",
+  "Reset Password": "Восстановление пароля",
+  "Send Password Reset Link": "Обновить пароль",
+  "Logout": "Выйти",
+  "Send message": "Отправить сообщение",
+  "Add new message": "Добавить новое сообщение",
+  "List of messages": "Все сообщения",
+  "no messages were found": "нет сообщений"
 }

@@ -1,15 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Àäìèíèñòðàòîð
- * Date: 24.10.2018
- * Time: 22:39
- */
-
+// ÐœÐ°Ñ€ÑˆÑ€ÑƒÑ‚Ñ‹ Ð°Ð²Ñ‚Ð¾Ñ€Ð¸Ð·Ð°Ñ†Ð¸Ð¸
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
-// Ìàðøðóòû ðåãèñòðàöèè...
+// ÐœÐ°Ñ€ÑˆÑ€ÑƒÑ‚Ñ‹ Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ð¸...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
