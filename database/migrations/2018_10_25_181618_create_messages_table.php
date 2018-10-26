@@ -18,6 +18,7 @@ class CreateMessagesTable extends Migration
             $table->integer('user_id');
             $table->longText('text');
             $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
