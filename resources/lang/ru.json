@@ -14,5 +14,7 @@
   "Send message": "Отправить сообщение",
   "Add new message": "Добавить новое сообщение",
   "List of messages": "Все сообщения",
-  "no messages were found": "нет сообщений"
+  "no messages were found": "нет сообщений",
+  "User list": "Список пользователей",
+  "Save": "Сохранить"
 }

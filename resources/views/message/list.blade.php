@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page_title' => 'Welcome!'])
+@extends('layouts.app', ['page_title' => __('List of messages')])
 
 @section('html_header')
         <!-- Additional header tags -->
@@ -8,34 +8,32 @@
 <div class="container">
     @auth
     <div class="col-md-12">
-        <div class="my-3 p-3 bg-white rounded shadow-sm">
-            <form method="POST" action="{{ url('add') }}" aria-label="{{ __('Add new message') }}">
-                @csrf
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <strong>Ошибка!</strong> {{ $errors->first() }}
-                    </div>
-                @endif
-                <h6 class="border-bottom border-gray pb-2 mb-0">{{ __('Add new message') }}</h6>
-                <div class="form-group row">
-                    <div class="col-md-12">
-                        <textarea id="text" class="form-control" name="text" autofocus>{{ old('text') }}</textarea>
-                    </div>
+        <form method="POST" action="{{ url('add') }}" aria-label="{{ __('Add new message') }}">
+            @csrf
+            @if (count($errors) > 0)
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong>Ошибка!</strong> {{ $errors->first() }}
                 </div>
-                <div class="form-group row">
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('Send message') }}
-                        </button>
-                    </div>
+            @endif
+            <h6>{{ __('Add new message') }}</h6>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <textarea id="text" class="form-control" name="text" autofocus>{{ old('text') }}</textarea>
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">
+                        {{ __('Send message') }}
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
     @endauth
     <div class="col-md-12">
-        <div class="my-3 p-3 bg-white rounded shadow-sm">
+        <div class="my-3 p-3 bg-white shadow-sm">
             <h6 class="border-bottom border-gray pb-2 mb-0">{{ __('List of messages') }}</h6>
         @if (count($messages) > 0)
             @foreach ($messages->all() as $message)
@@ -46,14 +44,14 @@
                     <strong class="d-block text-gray-dark">{{ $message->name }}</strong>
                     <div class="text-muted">{{ html_entity_decode($message->text) }}</div>
                     @auth
-                    @if(Auth::user()->id == $message->user_id)
+                    @if(Auth::user()->is_admin || Auth::user()->id == $message->user_id)
                         <div class="float-right">
                             <form action="{{ url('message/'.$message->id) }}" method="POST" onsubmit="if(!confirm('Удалить сообщение?')) return false;">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fa fa-trash"></i> Удалить
+                                <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Удалить сообщение">
+                                    <i class="fa fa-trash"></i>
                                 </button>
                             </form>
                         </div>
@@ -71,4 +69,11 @@
     </div>
 </div>
 
+@endsection
+@section('inline_scripts')
+    <script>
+        window.onload = function(){
+            $('[data-toggle="tooltip"]').tooltip()
+        };
+    </script>
 @endsection
