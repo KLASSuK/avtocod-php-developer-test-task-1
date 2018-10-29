@@ -2,7 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-
+use App\Message;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,18 +20,8 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('password'),
                 'is_admin' => true
             ]);
-
-        DB::table('messages')->truncate();
-
-        $faker = Faker\Factory::create();
-
-        $data = [];
-        factory(User::class)->times(mt_rand(7, 14))->create()->each(function ($user)use($faker, &$data){
-            $data[] = [
-                'user_id' => $user->id,
-                'text' => $faker->text
-            ];
+        factory(User::class)->times(mt_rand(7, 14))->create()->each(function ($user){
+            factory(Message::class, 5)->create(['user_id'=>$user->id]);
         });
-        DB::table('messages')->insert($data);
     }
 }

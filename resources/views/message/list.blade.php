@@ -66,6 +66,9 @@
             </div>
         @endif
         </div>
+        <div class="text-muted">
+            {{ $messages->links()  }}
+        </div>
     </div>
 </div>
 

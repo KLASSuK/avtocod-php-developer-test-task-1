@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Message;
 use Illuminate\Http\Request;
 
 
@@ -27,7 +26,6 @@ Route::get('users', function () {
     return view('users', ['users'=>$users]);
 })->middleware('auth');
 
-
 Route::post('save/{id}', function(Request $request, $id) {
     if (Auth::user()->id != $id) {
         $isAdmin = $request->exists('is_admin');
@@ -36,21 +34,9 @@ Route::post('save/{id}', function(Request $request, $id) {
     return redirect('/users');
 });
 
-Route::post('/add', function(Request $request){
-    $message = new Message();
-    Validator::make($request->all(), [
-        'text' => 'required|unique:messages'
-    ], $message->messages())->validate();
-    $message->user_id = Auth::user()->id;
-    $message->text = htmlentities($request->text);
-    $message->save();
-    return redirect('/');
-});
+Route::post('/add','MessageController@add');
 
-Route::delete('/message/{message}', function (Message $message) {
-    if(Auth::user()->is_admin || $message->user_id == Auth::user()->id) $message->delete();
-    return redirect('/');
-});
+Route::delete('/message/{message}','MessageController@delete');
 
 Auth::routes();
 
