@@ -49,9 +49,25 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'name' => array(
+                'required',
+                'string',
+                'min:8',
+                'regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'
+            ),
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => array(
+                'required',
+                'string',
+                'min:6',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/',
+                'confirmed'
+            ),
+        ],[
+            'name.regex'=>'только альфа-символы (a-z) (в любом регистре) + возможно цифры (0-9)',
+            'password.regex'=>'Пароль должен содержать символы в верхнем и нижнем регистрах + цифры',
+            'name.min'=>'Минимальная длинна - 8 символов',
+            'password.min'=>'Минимальная длинна - 6 символов',
         ]);
     }
 
